@@ -10,8 +10,15 @@ class ImcConnection():
 
     @staticmethod
     def is_login_param(param):
-        return param in ["ip", "username", "password",
-                         "port", "secure", "proxy", "server"]
+        return param in [
+            "ip",
+            "username",
+            "password",
+            "port",
+            "secure",
+            "proxy",
+            "server",
+            "starship_options"]
 
     def __init__(self, module):
         if HAS_IMCSDK is False:
@@ -22,12 +29,20 @@ class ImcConnection():
         self.handle = None
 
     def login(self):
+        from imcsdk.imchandle import ImcHandle
         ansible = self.module.params
+
+        starship_options = ansible.get('starship_options')
+        if starship_options:
+            server = ImcHandle()
+            server.set_starship_proxy(starship_options["url"])
+            server.set_starship_headers(starship_options["cookies"])
+            return server
+
         server = ansible.get('server')
         if server:
             return server
 
-        from imcsdk.imchandle import ImcHandle
         results = {}
         try:
             server = ImcHandle(ip=ansible["ip"],
@@ -44,7 +59,13 @@ class ImcConnection():
         return server
 
     def logout(self):
-        server = self.module.params.get('server')
+        ansible = self.module.params
+
+        starship_options = ansible.get('starship_options')
+        if starship_options:
+            return True
+
+        server = ansible.get('server')
         if server:
             # we used a pre-existing handle from a task.
             # do not logout
