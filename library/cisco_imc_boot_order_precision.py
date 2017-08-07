@@ -120,6 +120,9 @@ def main():
             port=dict(required=False, default=None),
             secure=dict(required=False, default=None),
             proxy=dict(required=False, default=None)
+
+            # Starship internal options
+            starship_options=dict(required=False, default=None)
         ),
         supports_check_mode=True
     )
