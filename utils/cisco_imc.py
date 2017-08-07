@@ -34,7 +34,7 @@ class ImcConnection():
 
         starship_options = ansible.get('starship_options')
         if starship_options:
-            server = ImcHandle()
+            server = ImcHandle("192.168.1.1", "admin", "password")
             server.set_starship_proxy(starship_options["url"])
             server.set_starship_headers(starship_options["cookies"])
             return server
