@@ -92,6 +92,7 @@ def boot_order_precision(server, module):
         err = True
         results["msg"] = str(e)
         results["changed"] = False
+        raise
 
     return results, err
 
