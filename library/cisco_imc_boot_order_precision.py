@@ -132,7 +132,11 @@ def main():
     results, err = boot_order_precision(server, module)
     conn.logout()
     if err:
+        results["status"] = "error"
         module.fail_json(**results)
+    else:
+        results["msg"] = ""
+        results["status"] = "ok"
     module.exit_json(**results)
 
 
