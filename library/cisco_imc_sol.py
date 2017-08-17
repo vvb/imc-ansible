@@ -118,7 +118,8 @@ def main():
             password=dict(required=False, type='str', no_log=True),
             port=dict(required=False, default=None),
             secure=dict(required=False, default=None),
-            proxy=dict(required=False, default=None)
+            proxy=dict(required=False, default=None),
+            starship_options=dict(required=False, type='dict', default=None)
         ),
         supports_check_mode=True
     )
@@ -131,7 +132,11 @@ def main():
     results, err = setup(server, module)
     conn.logout()
     if err:
+        results["status"] = "error"
         module.fail_json(**results)
+    else:
+        results["msg"] = ""
+        results["status"] = "ok"
     module.exit_json(**results)
 
 
