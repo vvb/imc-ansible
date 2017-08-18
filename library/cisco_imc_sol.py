@@ -179,11 +179,11 @@ def main():
     result, err = setup(server, module)
     conn.logout()
     if err:
-        results["status"] = "error"
+        result["status"] = "error"
         module.fail_json(**result)
     else:
-        results["msg"] = "" 
-        results["status"] = "ok" 
+        result["msg"] = "" 
+        result["status"] = "ok" 
     module.exit_json(**result)
 
 
