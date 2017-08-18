@@ -27,7 +27,7 @@ Input Params:
         default: "read-only"
         required: False
 
-    ssh_port: 
+    ssh_port:
         description: the SSH port for access to the console
         default: 22
 
@@ -36,8 +36,8 @@ Input Params:
         choices: ["present", "absent"]
         default: "present"
         required: False
-        
-notes: 
+
+notes:
     - check_mode supported
     - returns SOL status as 'status'
 
@@ -77,7 +77,7 @@ def setup_sol(server, module):
         if module.check_mode == True and status == True:
             changed = sol_disable(
                 server, server_id=server_id)
-            
+
     return changed, status
 
 
@@ -124,7 +124,7 @@ def main():
         supports_check_mode=True
     )
 
-    if module.param['ssh_port'] < 1025 or module.param['ssh_port'] > 65535: 
+    if module.params['ssh_port'] < 1025 or module.params['ssh_port'] > 65535:
         module.fail_json(msg="ssh_port must be in range 1024-65535")
 
     conn = ImcConnection(module)
